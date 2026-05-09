@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithm Visualizer</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  
+  <body>
+
+    <h1 class="title">Algorithm Visualizer</h1>
+
+    <div class="container">
+      <!--quick sort, merge sort, bubble sort, selection sort, insertion sort, bfd, dfs, dijkstra's, prim's, kruskal's,-->
+      
+      <!-- side bar on left -->
+      <div class="sidebar">
+        <button id="linearBtn">Linear Search</button>
+        <button id="binaryBtn">Binary Search</button>
+      </div>
+
+      <!-- visualization in center -->
+      <div class="visualization">
+        <div id="array-container"></div>
+          <button id="startBtn">Start Search</button>
+      </div>
+
+      <!-- code panel on right -->
+      <div class="code-panel">
+        <h2>Code</h2>
+        <div class="code-line" id="line-1">
+          for each element in array
+        </div>
+        <div class="code-line" id="line-2">
+          if element == target
+        </div>
+        <div class="code-line" id="line-3">
+          return index
+        </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
