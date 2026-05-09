@@ -1,0 +1,109 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #111827;
+    color: white;
+}
+
+.title {
+    text-align: center;
+    margin: 20px 0;
+}
+
+/* MAIN LAYOUT */
+.container {
+    display: flex;
+    height: 80vh;
+}
+
+/* left */
+.sidebar {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+}
+
+/* center */
+.visualization {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+
+.input-panel input {
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    width: 300px;
+    font-size: 16px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* right */
+.code-panel {
+    width: 30%;
+    padding: 20px;
+    background: #1f2937;
+}
+
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #0602f5;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #6366f1;
+}
+
+button:active {
+  background-color: rgb(106, 190, 242);
+}
+
+#array-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 40px;
+}
+
+.bar {
+    width: 50px;
+    background: #22c55e;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    color: white;
+    font-weight: bold;
+    border-radius: 6px;
+}
+
+/* lines of code */
+.code-line {
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+
+/* active code line */
+.active-line {
+    background: #facc15;
+    color: black;
+}
