@@ -13,20 +13,18 @@ const targetInput = document.getElementById("targetInput");
 
 let currentAlgorithm = "";
 
-
 function selectAlgorithm(algorithm) {
-
-    // Remove previous active button
+    // remove previous active button
     linearBtn.classList.remove("active-btn");
     binaryBtn.classList.remove("active-btn");
 
-    // Show input panel
+    //show input panel
     inputPanel.classList.remove("hidden");
 
-    // Store current algorithm
+    //store current algorithm
     currentAlgorithm = algorithm;
 
-    // Highlight selected button
+    //highlight selected button
     if (algorithm === "linear") {
         linearBtn.classList.add("active-btn");
         loadLinearCode();
@@ -48,10 +46,6 @@ binaryBtn.addEventListener("click", () => {
     selectAlgorithm("binary");
 });
 
-
-// ===============================
-// CREATE ARRAY VISUALIZATION
-// ===============================
 
 function createArray(array) {
     arrayContainer.innerHTML = "";
@@ -81,10 +75,10 @@ function highlightLine(lineId) {
 }
 
 function loadLinearCode() {
-    const codePanel = document.querySelector(".code-panel");
-    codePanel.innerHTML = `
-        <h2>Linear Search</h2>
+    const codeContent = 
+        document.getElementById("codeContent");
 
+    codeContent.innerHTML = `
         <div class="code-line" id="line-1">
             for each element in array
         </div>
@@ -100,11 +94,10 @@ function loadLinearCode() {
 }
 
 function loadBinaryCode() {
-    const codePanel = document.querySelector(".code-panel");
+    const codeContent =
+        document.getElementById("codeContent");
 
-    codePanel.innerHTML = `
-        <h2>Binary Search</h2>
-
+    codeContent.innerHTML = `
         <div class="code-line" id="line-1">
             set left = 0
         </div>
