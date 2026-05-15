@@ -2,6 +2,7 @@ const arrayContainer = document.getElementById("array-container");
 
 const linearBtn = document.getElementById("linearBtn");
 const binaryBtn = document.getElementById("binaryBtn");
+const quickBtn = document.getElementById("quickBtn");
 
 const startBtn = document.getElementById("startBtn");
 
@@ -17,6 +18,7 @@ function selectAlgorithm(algorithm) {
     // remove previous active button
     linearBtn.classList.remove("active-btn");
     binaryBtn.classList.remove("active-btn");
+    quickBtn.classList.remove("active-btn");
 
     //show input panel
     inputPanel.classList.remove("hidden");
@@ -24,7 +26,6 @@ function selectAlgorithm(algorithm) {
     //store current algorithm
     currentAlgorithm = algorithm;
 
-    //highlight selected button
     if (algorithm === "linear") {
         linearBtn.classList.add("active-btn");
         loadLinearCode();
@@ -33,6 +34,10 @@ function selectAlgorithm(algorithm) {
     if (algorithm === "binary") {
         binaryBtn.classList.add("active-btn");
         loadBinaryCode();
+    }
+    if (algorithm === "quick") {
+        quickBtn.classList.add("active-btn");
+        loadQuickCode();
     }
 }
 
@@ -44,6 +49,10 @@ linearBtn.addEventListener("click", () => {
 
 binaryBtn.addEventListener("click", () => {
     selectAlgorithm("binary");
+});
+
+quickBtn.addEventListener("click", () => {
+    selectAlgorithm("quick");
 });
 
 
@@ -124,6 +133,32 @@ function loadBinaryCode() {
     `;
 }
 
+function loadQuickCode() {
+    const codeContent =
+        document.getElementById("codeContent");
+
+    codeContent.innerHTML = `
+        <div class="code-line" id="line-1">
+            choose pivot
+        </div>
+
+        <div class="code-line" id="line-2">
+            partition array
+        </div>
+
+        <div class="code-line" id="line-3">
+            place pivot correctly
+        </div>
+
+        <div class="code-line" id="line-4">
+            recursively sort left
+        </div>
+
+        <div class="code-line" id="line-5">
+            recursively sort right
+        </div>
+    `;
+}
 
 async function linearSearch(array, target) {
     const bars = document.querySelectorAll(".bar");
@@ -192,6 +227,67 @@ async function binarySearch(array, target) {
     }
 }
 
+async function quickSort(array, low, high) {
+    if (low < high) {
+        const pivotIndex =
+            await partition(array, low, high);
+        await quickSort(array, low, pivotIndex - 1);
+        await quickSort(array, pivotIndex + 1, high);
+    }
+}
+
+async function partition(array, low, high) {
+    const bars = document.querySelectorAll(".bar");
+    highlightLine("line-1");
+
+    let pivot = array[high];
+    bars[high].style.background = "red";
+
+    let i = low - 1;
+    for (let j = low; j < high; j++) {
+        highlightLine("line-2");
+        bars[j].style.background = "yellow";
+        await sleep(700);
+
+        if (array[j] < pivot) {
+            i++;
+            // Swap values
+            [array[i], array[j]] =
+            [array[j], array[i]];
+            // Update heights
+            bars[i].style.height =
+                `${array[i] * 20}px`;
+            bars[j].style.height =
+                `${array[j] * 20}px`;
+            bars[i].textContent = array[i];
+            bars[j].textContent = array[j];
+            bars[i].style.background = "blue";
+
+            await sleep(700);
+        }
+        bars[j].style.background = "#22c55e";
+    }
+
+    highlightLine("line-3");
+
+    // Final pivot swap
+    [array[i + 1], array[high]] =
+    [array[high], array[i + 1]];
+
+    bars[i + 1].style.height =
+        `${array[i + 1] * 20}px`;
+
+    bars[high].style.height =
+        `${array[high] * 20}px`;
+
+    bars[i + 1].textContent = array[i + 1];
+    bars[high].textContent = array[high];
+
+    await sleep(700);
+    bars[i + 1].style.background = "green";
+    return i + 1;
+}
+
 //main
 startBtn.addEventListener("click", () => {
     // convert input into array
@@ -212,5 +308,9 @@ startBtn.addEventListener("click", () => {
 
     if (currentAlgorithm === "binary") {
         binarySearch(userArray, target);
+    }
+
+    if (currentAlgorithm === "quick") {
+        quickSort(userArray, 0, userArray.length - 1);
     }
 });
