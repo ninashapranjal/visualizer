@@ -13,18 +13,29 @@
     <h1 class="title">Algorithm Visualizer</h1>
 
     <div class="container">
-      <!--quick sort, merge sort, bubble sort, selection sort, insertion sort, bfd, dfs, dijkstra's, prim's, kruskal's,-->
+      <!--quick sort, merge sort, bubble sort, selection sort, insertion sort, bfs, dfs, dijkstra's, prim's, kruskal's,-->
       
       <!-- side bar on left -->
       <div class="sidebar">
         <button id="linearBtn">Linear Search</button>
         <button id="binaryBtn">Binary Search</button>
         <button id="quickBtn">Quick Sort</button>
+        <button id="mergeBtn">Merge Sort</button>
+        <button id="bubbleBtn">Bubble Sort</button>
+        <button id="selectionBtn">Selection Sort</button>
+        <button id="insertionBtn">Insertion Sort</button>
       </div>
 
       <!-- visualization in center -->
       <div class="visualization">
-        <div class="input-panel hidden" id="inputPanel">
+        
+        <!-- visualization box -->
+        <div class="visualization-box">
+          <div id="array-container"></div>
+        </div>
+
+        <!-- controls under visualization -->
+        <div class="input-panel" id="inputPanel">
           <input
             type="text"
             id="arrayInput"
@@ -36,11 +47,11 @@
             id="targetInput"
             placeholder="Target value"
           >
+
+          <button id="startBtn">
+            Start Search
+          </button>
         </div>
-
-        <div id="array-container"></div>
-
-        <button id="startBtn">Start Search</button>
       </div>
 
       <!-- code panel on right -->
