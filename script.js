@@ -3,6 +3,13 @@ const arrayContainer = document.getElementById("array-container");
 const linearBtn = document.getElementById("linearBtn");
 const binaryBtn = document.getElementById("binaryBtn");
 const quickBtn = document.getElementById("quickBtn");
+const bubbleBtn = document.getElementById("bubbleBtn");
+const selectionBtn = 
+    document.getElementById("selectionBtn");
+const insertionBtn =
+    document.getElementById("insertionBtn");
+const mergeBtn =
+    document.getElementById("mergeBtn");
 
 const startBtn = document.getElementById("startBtn");
 
@@ -18,6 +25,11 @@ function selectAlgorithm(algorithm) {
     // remove previous active button
     linearBtn.classList.remove("active-btn");
     binaryBtn.classList.remove("active-btn");
+    quickBtn.classList.remove("active-btn");
+    bubbleBtn.classList.remove("active-btn");
+    selectionBtn.classList.remove("active-btn");
+    insertionBtn.classList.remove("active-btn");
+    mergeBtn.classList.remove("active-btn");
     quickBtn.classList.remove("active-btn");
 
     //show input panel
@@ -39,8 +51,27 @@ function selectAlgorithm(algorithm) {
         quickBtn.classList.add("active-btn");
         loadQuickCode();
     }
-}
 
+    if (algorithm === "bubble") {
+        bubbleBtn.classList.add("active-btn");
+        loadBubbleCode();
+    }
+
+    if (algorithm === "selection") {
+        selectionBtn.classList.add("active-btn");
+        loadSelectionCode();
+    }
+
+    if (algorithm === "insertion") {
+        insertionBtn.classList.add("active-btn");
+        loadInsertionCode();
+    }
+
+    if (algorithm === "merge") {
+        mergeBtn.classList.add("active-btn");
+        loadMergeCode();
+    }
+}
 
 //when button is pressed
 linearBtn.addEventListener("click", () => {
@@ -53,6 +84,22 @@ binaryBtn.addEventListener("click", () => {
 
 quickBtn.addEventListener("click", () => {
     selectAlgorithm("quick");
+});
+
+mergeBtn.addEventListener("click", () => {
+    selectAlgorithm("merge");
+});
+
+bubbleBtn.addEventListener("click", () => {
+    selectAlgorithm("bubble");
+});
+
+selectionBtn.addEventListener("click", () => {
+    selectAlgorithm("selection");
+});
+
+insertionBtn.addEventListener("click", () => {
+    selectAlgorithm("insertion");
 });
 
 
@@ -156,6 +203,135 @@ function loadQuickCode() {
 
         <div class="code-line" id="line-5">
             recursively sort right
+        </div>
+    `;
+}
+
+function loadBubbleCode() {
+
+    const codeContent =
+        document.getElementById("codeContent");
+
+    codeContent.innerHTML = `
+
+        <div class="code-line" id="line-1">
+            compare adjacent elements
+        </div>
+
+        <div class="code-line" id="line-2">
+            if left > right
+        </div>
+
+        <div class="code-line" id="line-3">
+            swap elements
+        </div>
+
+        <div class="code-line" id="line-4">
+            repeat until sorted
+        </div>
+    `;
+}
+
+function loadInsertionCode() {
+
+    const codeContent =
+        document.getElementById("codeContent");
+
+    codeContent.innerHTML = `
+
+        <div class="code-line" id="line-1">
+            pick current element
+        </div>
+
+        <div class="code-line" id="line-2">
+            compare with previous elements
+        </div>
+
+        <div class="code-line" id="line-3">
+            shift larger elements right
+        </div>
+
+        <div class="code-line" id="line-4">
+            insert element correctly
+        </div>
+    `;
+}
+
+function loadQuickCode() {
+
+    const codeContent =
+        document.getElementById("codeContent");
+
+    codeContent.innerHTML = `
+
+        <div class="code-line" id="line-1">
+            choose pivot
+        </div>
+
+        <div class="code-line" id="line-2">
+            partition array
+        </div>
+
+        <div class="code-line" id="line-3">
+            place pivot correctly
+        </div>
+
+        <div class="code-line" id="line-4">
+            recursively sort left
+        </div>
+
+        <div class="code-line" id="line-5">
+            recursively sort right
+        </div>
+    `;
+}
+
+function loadMergeCode() {
+
+    const codeContent =
+        document.getElementById("codeContent");
+
+    codeContent.innerHTML = `
+
+        <div class="code-line" id="line-1">
+            split array into halves
+        </div>
+
+        <div class="code-line" id="line-2">
+            recursively sort left half
+        </div>
+
+        <div class="code-line" id="line-3">
+            recursively sort right half
+        </div>
+
+        <div class="code-line" id="line-4">
+            merge sorted halves
+        </div>
+    `;
+}
+
+function loadSelectionCode() {
+
+    const codeContent =
+        document.getElementById("codeContent");
+
+    codeContent.innerHTML = `
+
+        <div class="code-line" id="line-1">
+            set current minimum
+        </div>
+
+        <div class="code-line" id="line-2">
+            scan remaining array
+        </div>
+
+        <div class="code-line" id="line-3">
+            update minimum if needed
+        </div>
+
+        <div class="code-line" id="line-4">
+            swap minimum into place
         </div>
     `;
 }
@@ -282,11 +458,14 @@ async function selectionSort(array) {
     const bars = document.querySelectorAll(".bar");
     for (let i = 0; i < array.length; i++) {
         let minIndex = i;
+        highlightLine("line-1");
         bars[minIndex].style.background = "yellow";
 
         for (let j = i + 1; j < array.length; j++) {
+            highlightLine("line-2");
             bars[j].style.background = "red";
             await sleep(500);
+            highlightLine("line-3");
             if (array[j] < array[minIndex]) {
 
                 bars[minIndex].style.background =
@@ -300,6 +479,7 @@ async function selectionSort(array) {
                 bars[j].style.background = "#22c55e";
             }
         }
+        highlightLine("line-4");
 
         // swap
         [array[i], array[minIndex]] =
@@ -323,12 +503,15 @@ async function selectionSort(array) {
 async function insertionSort(array) {
     const bars = document.querySelectorAll(".bar");
     for (let i = 1; i < array.length; i++) {
+        highlightLine("line-1");
         let key = array[i];
         let j = i - 1;
         bars[i].style.background = "yellow";
         await sleep(500);
+        highlightLine("line-2");
 
         while (j >= 0 && array[j] > key) {
+            highlightLine("line-3");
             bars[j].style.background = "red";
             array[j + 1] = array[j];
             bars[j + 1].style.height =
@@ -342,7 +525,7 @@ async function insertionSort(array) {
 
             j--;
         }
-
+        highlightLine("line-4");
         array[j + 1] = key;
 
         bars[j + 1].style.height =
@@ -356,11 +539,19 @@ async function insertionSort(array) {
 
 async function mergeSort(array, left, right) {
     if (left >= right) return;
+    highlightLine("line-1");
+
     const mid =
         Math.floor((left + right) / 2);
 
+    await sleep(500);
+    highlightLine("line-2");
     await mergeSort(array, left, mid);
+    await sleep(500);
+    highlightLine("line-3");
     await mergeSort(array, mid + 1, right);
+    await sleep(500);
+    highlightLine("line-4");
     await merge(array, left, mid, right);
 }
 
