@@ -236,6 +236,213 @@ async function quickSort(array, low, high) {
     }
 }
 
+async function bubbleSort(array) {
+    const bars = document.querySelectorAll(".bar");
+    for (let i = 0; i < array.length; i++) {
+
+        for (let j = 0; j < array.length - i - 1; j++) {
+            highlightLine("line-1");
+
+            bars[j].style.background = "red";
+            bars[j + 1].style.background = "red";
+
+            await sleep(500);
+
+            if (array[j] > array[j + 1]) {
+                highlightLine("line-2");
+                [array[j], array[j + 1]] =
+                [array[j + 1], array[j]];
+
+                // update bars
+                bars[j].style.height =
+                    `${array[j] * 20}px`;
+
+                bars[j + 1].style.height =
+                    `${array[j + 1] * 20}px`;
+
+                bars[j].textContent = array[j];
+                bars[j + 1].textContent = array[j + 1];
+
+                bars[j].style.background = "blue";
+                bars[j + 1].style.background = "blue";
+
+                await sleep(500);
+            }
+
+            bars[j].style.background = "#22c55e";
+            bars[j + 1].style.background = "#22c55e";
+        }
+
+        bars[array.length - i - 1]
+            .style.background = "green";
+    }
+}
+
+async function selectionSort(array) {
+    const bars = document.querySelectorAll(".bar");
+    for (let i = 0; i < array.length; i++) {
+        let minIndex = i;
+        bars[minIndex].style.background = "yellow";
+
+        for (let j = i + 1; j < array.length; j++) {
+            bars[j].style.background = "red";
+            await sleep(500);
+            if (array[j] < array[minIndex]) {
+
+                bars[minIndex].style.background =
+                    "#22c55e";
+                minIndex = j;
+                bars[minIndex].style.background =
+                    "yellow";
+            }
+            await sleep(300);
+            if (j !== minIndex) {
+                bars[j].style.background = "#22c55e";
+            }
+        }
+
+        // swap
+        [array[i], array[minIndex]] =
+        [array[minIndex], array[i]];
+
+        bars[i].style.height =
+            `${array[i] * 20}px`;
+
+        bars[minIndex].style.height =
+            `${array[minIndex] * 20}px`;
+
+        bars[i].textContent = array[i];
+        bars[minIndex].textContent = array[minIndex];
+
+        bars[i].style.background = "green";
+
+        await sleep(500);
+    }
+}
+
+async function insertionSort(array) {
+    const bars = document.querySelectorAll(".bar");
+    for (let i = 1; i < array.length; i++) {
+        let key = array[i];
+        let j = i - 1;
+        bars[i].style.background = "yellow";
+        await sleep(500);
+
+        while (j >= 0 && array[j] > key) {
+            bars[j].style.background = "red";
+            array[j + 1] = array[j];
+            bars[j + 1].style.height =
+                `${array[j + 1] * 20}px`;
+            bars[j + 1].textContent =
+                array[j + 1];
+
+            await sleep(500);
+
+            bars[j].style.background = "#22c55e";
+
+            j--;
+        }
+
+        array[j + 1] = key;
+
+        bars[j + 1].style.height =
+            `${key * 20}px`;
+
+        bars[j + 1].textContent = key;
+
+        bars[j + 1].style.background = "blue";
+    }
+}
+
+async function mergeSort(array, left, right) {
+    if (left >= right) return;
+    const mid =
+        Math.floor((left + right) / 2);
+
+    await mergeSort(array, left, mid);
+    await mergeSort(array, mid + 1, right);
+    await merge(array, left, mid, right);
+}
+
+async function merge(array, left, mid, right) {
+    const bars =
+        document.querySelectorAll(".bar");
+
+    // Highlight left side
+    for (let i = left; i <= mid; i++) {
+        bars[i].style.background = "blue";
+    }
+
+    // Highlight right side
+    for (let i = mid + 1; i <= right; i++) {
+        bars[i].style.background = "red";
+    }
+
+    await sleep(700);
+
+    let leftArray = array.slice(left, mid + 1);
+    let rightArray = array.slice(mid + 1, right + 1);
+
+    let i = 0;
+    let j = 0;
+    let k = left;
+
+    while (
+        i < leftArray.length &&
+        j < rightArray.length
+    ) {
+        if (leftArray[i] <= rightArray[j]) {
+            array[k] = leftArray[i];
+            i++;
+        } else {
+            array[k] = rightArray[j];
+            j++;
+        }
+
+        // update visualization
+        bars[k].style.height =
+            `${array[k] * 20}px`;
+
+        bars[k].textContent = array[k];
+        bars[k].style.background = "green";
+        await sleep(500);
+        k++;
+    }
+
+    // remaining left side
+    while (i < leftArray.length) {
+        array[k] = leftArray[i];
+        bars[k].style.height =
+            `${array[k] * 20}px`;
+        bars[k].textContent = array[k];
+        bars[k].style.background = "green";
+
+        i++;
+        k++;
+
+        await sleep(500);
+    }
+
+    // remaining right side
+    while (j < rightArray.length) {
+        array[k] = rightArray[j];
+        bars[k].style.height =
+            `${array[k] * 20}px`;
+        bars[k].textContent = array[k];
+        bars[k].style.background = "green";
+
+        j++;
+        k++;
+
+        await sleep(500);
+    }
+
+    // reset colors
+    for (let i = left; i <= right; i++) {
+        bars[i].style.background = "#22c55e";
+    }
+}
+
 async function partition(array, low, high) {
     const bars = document.querySelectorAll(".bar");
     highlightLine("line-1");
@@ -251,10 +458,8 @@ async function partition(array, low, high) {
 
         if (array[j] < pivot) {
             i++;
-            // Swap values
             [array[i], array[j]] =
             [array[j], array[i]];
-            // Update heights
             bars[i].style.height =
                 `${array[i] * 20}px`;
             bars[j].style.height =
@@ -270,7 +475,6 @@ async function partition(array, low, high) {
 
     highlightLine("line-3");
 
-    // Final pivot swap
     [array[i + 1], array[high]] =
     [array[high], array[i + 1]];
 
@@ -312,5 +516,21 @@ startBtn.addEventListener("click", () => {
 
     if (currentAlgorithm === "quick") {
         quickSort(userArray, 0, userArray.length - 1);
+    }
+
+    if (currentAlgorithm === "bubble") {
+        bubbleSort(userArray);
+    }
+
+    if (currentAlgorithm === "selection") {
+        selectionSort(userArray);
+    }
+
+    if (currentAlgorithm === "insertion") {
+        insertionSort(userArray);
+    }
+
+    if (currentAlgorithm === "merge") {
+        mergeSort(userArray,0,userArray.length - 1);
     }
 });
